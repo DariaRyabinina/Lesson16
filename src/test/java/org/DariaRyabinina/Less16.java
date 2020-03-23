@@ -72,7 +72,10 @@ public class Less16 {
         button.click();
 
     }
-     @AfterMethod
-public void closeDriver() {webDriver.quit();}
-  }
+
+    @AfterMethod
+    public void closeDriver() {
+        webDriver.quit();
+    }
+}
 
