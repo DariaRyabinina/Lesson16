@@ -73,9 +73,9 @@ public class Less16 {
 
     }
 
-    @AfterMethod
-    public void closeDriver() {
-        webDriver.quit();
-    }
+   // @AfterMethod
+   // public void closeDriver() {
+   //     webDriver.quit();
+   // }
 }
 
