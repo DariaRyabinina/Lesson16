@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Less16 {
     private WebDriver webDriver;
-    public static final Logger LOG = LoggerFactory.getLogger(Less16.class);
+    public static final Logger LOGG = LoggerFactory.getLogger(Less16.class);
 
     @BeforeClass
     public void downloadDriverManager() {
@@ -33,49 +34,103 @@ public class Less16 {
     public void Less16_1() {
         webDriver.get("https://savkk.github.io/selenium-practice/");
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        WebElement button = webDriver.findElement(By.id("button"));
-        button.click();
-        button = webDriver.findElement(By.id("first"));
-        button.click();
+        clickButton("button");
+
+        clickButton("first");
         WebElement exellent = webDriver.findElement(By.xpath("//label[@id='result'][2]"));
         Assert.assertEquals(exellent.getText(), "Excellent!");
-        button = webDriver.findElement(By.xpath("//input[@value='Click me too!']"));
+        WebElement button = webDriver.findElement(By.xpath("//input[@value='Click me too!']"));
         Assert.assertNotEquals(button, null);
         webDriver.findElement(By.xpath("//input[@value='Click me too!']")).click();
-        button = webDriver.findElement(By.xpath("//a"));
-        Assert.assertEquals(button.getText(), "Great! Return to menu");
-        button.click();
+        assertBack();
+        webDriver.findElement(By.xpath("//a")).click();
 
-        button = webDriver.findElement(By.id("checkbox"));
-        LOG.info(button.getText());
-        button.click();
-        WebElement checkBox1 = webDriver.findElement(By.id("one"));
-        checkBox1.click();
-        WebElement checkBox2 = webDriver.findElement(By.id("two"));
-        checkBox2.click();
-        button = webDriver.findElement(By.id("go"));
-        button.click();
-        WebElement result = webDriver.findElement(By.id("result"));
-        String stringResult = webDriver.findElement(By.id("result")).getText();
-        Assert.assertEquals(result.getText(), checkBox1.getAttribute("id") + " " + checkBox2.getAttribute("id"));
+        clickButton("checkbox");
+        clickCheckBox("one");
+        String stringCheckBox = "one";
+        clickCheckBox("two");
+        stringCheckBox += " two";
+        clickButton("go");
+        String result = webDriver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, stringCheckBox);
 
-        WebElement checkBox = webDriver.findElement(By.id("radio_three"));
-        checkBox.click();
-        button = webDriver.findElement(By.id("radio_go"));
-        button.click();
-        result = webDriver.findElement(By.id("radio_result"));
-        LOG.info(result.getText());
-        Assert.assertEquals(result.getText(), checkBox.getAttribute("value"));
-        button = webDriver.findElement(By.xpath("//a"));
-        Assert.assertEquals(button.getText(), "Great! Return to menu");
-        LOG.info(button.getText());
-        button.click();
+        //   WebElement webElementCheckBoxes= webDriver.findElement(By.xpath("//label"));
+     /*for (int i = 0; i <3 ; i++) {
+         webElementCheckBoxes=webElementCheckBoxes.findElement(By.xpath(".//@id and "));
+         LOGG.info(webElementCheckBoxes.getText());
+         //if(webElementCheckBoxes.getText()==)
+     }*/
+
+
+        String stringRadio;
+        clickCheckBox("radio_three");
+        stringRadio= webDriver.findElement(By.xpath("//label//input[@id='radio_three']")).getAttribute("value");
+        clickButton("radio_go");
+        result = webDriver.findElement(By.id("radio_result")).getText();
+        LOGG.info(result);
+        Assert.assertEquals(result, stringRadio);
+        assertBack();
+        webDriver.findElement(By.xpath("//a")).click();
+
+
+        //lesson17
+        clickButton("select");
+        cooseSelect("Select your hero:","Linus Torvalds");
+        cooseSelect("Select your programming languages:","Java");
+        cooseSelect("Select your programming languages:","C++");
+        clickButton("go");
+        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result']")).getText(), "Linus Torvalds");
+        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(),"Java, C++");
+        assertBack();
+        webDriver.findElement(By.xpath("//a")).click();
+        clickButton("form");
+        enterValue("First Name:", "Vasia");
+        enterValue("Last Name:", "Ivanov");
+        enterValue("Email:","ivanov@ya.ru");
+        enterValue("Address:","Moscow");
+        webDriver.findElement(By.xpath("//label[.='Sex:']/following::input[1]")).click();
+// как загрузить документ
+
+        webDriver.get("https://savkk.github.io/selenium-practice");
+        clickButton("iframe");
+        webDriver.switchTo().frame("code-frame");
+        String kod=webDriver.findElement(By.id("code")).getText();
+        LOGG.info(kod);
+        kod=kod.replace("Your code is: ","");
+        LOGG.info(kod);
+        webDriver.switchTo().defaultContent();
+        webDriver.findElement(By.name("code")).sendKeys(kod);
+        webDriver.findElement(By.name("ok")).click();
+        assertBack();
+        webDriver.findElement(By.xpath("//a")).click();
 
     }
 
-   // @AfterMethod
-   // public void closeDriver() {
-   //     webDriver.quit();
-   // }
+    public void clickButton(String idButton) {
+        webDriver.findElement(By.id(idButton)).click();
+    }
+
+    public void clickCheckBox(String nameBox) {
+        webDriver.findElement(By.id(nameBox)).click();
+    }
+    public void cooseSelect(String selectTitle,String value){
+        WebElement selectElement=webDriver.findElement(By.xpath("//label[.='"+ selectTitle+"']/following-sibling::select[1]"));
+        Select select=new Select(selectElement);
+        select.selectByVisibleText(value);
+    }
+    public void enterValue(String name, String value){
+       webDriver.findElement(By.xpath("//label[.='"+name+"']/following::input")).sendKeys(value);
+
+    }
+    public void assertBack(){
+        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(),"Great! Return to menu");
+    }
+
+
 }
+// @AfterMethod
+// public void closeDriver() {
+//     webDriver.quit();
+// }
+
 
