@@ -64,7 +64,7 @@ public class Less16 {
 
         String stringRadio;
         clickCheckBox("radio_three");
-        stringRadio= webDriver.findElement(By.xpath("//label//input[@id='radio_three']")).getAttribute("value");
+        stringRadio = webDriver.findElement(By.xpath("//label//input[@id='radio_three']")).getAttribute("value");
         clickButton("radio_go");
         result = webDriver.findElement(By.id("radio_result")).getText();
         LOGG.info(result);
@@ -75,28 +75,28 @@ public class Less16 {
 
         //lesson17
         clickButton("select");
-        cooseSelect("Select your hero:","Linus Torvalds");
-        cooseSelect("Select your programming languages:","Java");
-        cooseSelect("Select your programming languages:","C++");
+        cooseSelect("Select your hero:", "Linus Torvalds");
+        cooseSelect("Select your programming languages:", "Java");
+        cooseSelect("Select your programming languages:", "C++");
         clickButton("go");
         Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result']")).getText(), "Linus Torvalds");
-        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(),"Java, C++");
+        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(), "Java, C++");
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
         clickButton("form");
         enterValue("First Name:", "Vasia");
         enterValue("Last Name:", "Ivanov");
-        enterValue("Email:","ivanov@ya.ru");
-        enterValue("Address:","Moscow");
+        enterValue("Email:", "ivanov@ya.ru");
+        enterValue("Address:", "Moscow");
         webDriver.findElement(By.xpath("//label[.='Sex:']/following::input[1]")).click();
 // как загрузить документ
 
         webDriver.get("https://savkk.github.io/selenium-practice");
         clickButton("iframe");
         webDriver.switchTo().frame("code-frame");
-        String kod=webDriver.findElement(By.id("code")).getText();
+        String kod = webDriver.findElement(By.id("code")).getText();
         LOGG.info(kod);
-        kod=kod.replace("Your code is: ","");
+        kod = kod.replace("Your code is: ", "");
         LOGG.info(kod);
         webDriver.switchTo().defaultContent();
         webDriver.findElement(By.name("code")).sendKeys(kod);
@@ -113,24 +113,26 @@ public class Less16 {
     public void clickCheckBox(String nameBox) {
         webDriver.findElement(By.id(nameBox)).click();
     }
-    public void cooseSelect(String selectTitle,String value){
-        WebElement selectElement=webDriver.findElement(By.xpath("//label[.='"+ selectTitle+"']/following-sibling::select[1]"));
-        Select select=new Select(selectElement);
+
+    public void cooseSelect(String selectTitle, String value) {
+        WebElement selectElement = webDriver.findElement(By.xpath("//label[.='" + selectTitle + "']/following-sibling::select[1]"));
+        Select select = new Select(selectElement);
         select.selectByVisibleText(value);
     }
-    public void enterValue(String name, String value){
-       webDriver.findElement(By.xpath("//label[.='"+name+"']/following::input")).sendKeys(value);
+
+    public void enterValue(String name, String value) {
+        webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
 
     }
-    public void assertBack(){
-        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(),"Great! Return to menu");
+
+    public void assertBack() {
+        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu");
     }
 
-
+    @AfterMethod
+    public void closeDriver() {
+        webDriver.quit();
+    }
 }
-// @AfterMethod
-// public void closeDriver() {
-//     webDriver.quit();
-// }
 
 
