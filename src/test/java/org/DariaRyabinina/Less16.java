@@ -1,6 +1,7 @@
 package org.DariaRyabinina;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -54,7 +55,7 @@ public class Less16 {
         String result = webDriver.findElement(By.id("result")).getText();
         Assert.assertEquals(result, stringCheckBox);
 
-        //   WebElement webElementCheckBoxes= webDriver.findElement(By.xpath("//label"));
+      //     WebElement webElementCheckBoxes= webDriver.findElement(By.xpath("//label"));
      /*for (int i = 0; i <3 ; i++) {
          webElementCheckBoxes=webElementCheckBoxes.findElement(By.xpath(".//@id and "));
          LOGG.info(webElementCheckBoxes.getText());
@@ -73,7 +74,7 @@ public class Less16 {
         webDriver.findElement(By.xpath("//a")).click();
 
 
-        //lesson17
+    //    lesson17
         clickButton("select");
         cooseSelect("Select your hero:", "Linus Torvalds");
         cooseSelect("Select your programming languages:", "Java");
@@ -89,7 +90,11 @@ public class Less16 {
         enterValue("Email:", "ivanov@ya.ru");
         enterValue("Address:", "Moscow");
         webDriver.findElement(By.xpath("//label[.='Sex:']/following::input[1]")).click();
-// как загрузить документ
+        enterValue("Avatar:", "C:\\Users\\mas-d\\Учеба\\rD2QaWX7-ms.JPG");
+        webDriver.findElement(By.xpath("//label[.='Tell me something about yourself']/following::textarea")).sendKeys("Привет!");
+        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.findElement(By.xpath("//label[.='Tell me something about yourself']/following::input")).click();
+        assertBack();
 
         webDriver.get("https://savkk.github.io/selenium-practice");
         clickButton("iframe");
@@ -104,6 +109,20 @@ public class Less16 {
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
 
+        //Less18
+        webDriver.get("https://savkk.github.io/selenium-practice");
+        clickButton("alerts");
+        webDriver.findElement(By.xpath("//button[.='Get password']")).click();
+        Alert alert1 = webDriver.switchTo().alert();
+        String alertText = alert1.getText();
+        alertText = alertText.replace("Your password:", "");
+        LOGG.info(alertText);
+        alert1.accept();
+        webDriver.findElement(By.xpath("//button[.='Enter password']")).click();
+        Alert alert2=webDriver.switchTo().alert();
+        alert2.sendKeys(alertText);
+// как переключиться на Prompt
+//Assert.assertEquals(webDriver.findElement(By));
     }
 
     public void clickButton(String idButton) {
@@ -129,10 +148,11 @@ public class Less16 {
         Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu");
     }
 
-    @AfterMethod
+  /*  @AfterMethod
     public void closeDriver() {
         webDriver.quit();
     }
+*/
 }
 
 
