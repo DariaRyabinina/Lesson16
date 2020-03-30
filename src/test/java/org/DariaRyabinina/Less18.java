@@ -15,11 +15,14 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import org.openqa.selenium.*;
+
 import java.util.concurrent.TimeUnit;
 
 public class Less18 {
     private WebDriver webDriver;
     public static final Logger LOGG = LoggerFactory.getLogger(Less18.class);
+    private WebDriver webDriver1;
 
     @BeforeClass
     public void downloadDriverManager() {
@@ -59,7 +62,6 @@ public class Less18 {
 
     @Test(testName = "Less18_2")
     public void Less18_2() {
-
         clickButton("alerts");
         webDriver.findElement(By.xpath("//button[.='Get password']")).click();
         Alert alert1 = webDriver.switchTo().alert();
@@ -75,9 +77,13 @@ public class Less18 {
         LOGG.info(alertPass);
         alert2.sendKeys(alertPass);
         alert2.accept();
-        Assert.assertNotEquals(webDriver.findElement(By.xpath("//button[.='Enter password']/following::label")).getText(), "Great!");
+        try {
+            WebElement webElement = webDriver.findElement(By.xpath("//label[.='Great!']"));
+            Assert.fail();
+        } catch (NoSuchElementException e) {
+            Assert.assertTrue(true);
 
-
+        }
     }
 
     @Test(testName = "Less18_3")
