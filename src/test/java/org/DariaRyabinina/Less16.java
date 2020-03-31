@@ -1,10 +1,7 @@
 package org.DariaRyabinina;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
@@ -46,6 +43,8 @@ public class Less16 extends Methods {
         webDriver.findElement(By.xpath("//input[@value='Click me too!']")).click();
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
+        Cookie cookie1 = webDriver.manage().getCookieNamed("button");
+        Assert.assertNotEquals(cookie1.toString(), "done");
 
         clickButton("checkbox");
         clickCheckBox("one");
@@ -65,6 +64,8 @@ public class Less16 extends Methods {
         Assert.assertEquals(result, stringRadio);
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
+        Cookie cookie2 = webDriver.manage().getCookieNamed("checkboxes");
+        Assert.assertNotEquals(cookie2.toString(), "done");
     }
 
 

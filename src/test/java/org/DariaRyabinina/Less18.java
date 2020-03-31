@@ -57,6 +57,9 @@ public class Less18 {
         webDriver.findElement(By.xpath("//button[@class ='return']")).click();
         Alert alert3 = webDriver.switchTo().alert();
         alert3.accept();
+        Cookie cookie = webDriver.manage().getCookieNamed("alerts");
+        Assert.assertNotEquals(cookie.toString(), "done");
+
 
     }
 
@@ -82,7 +85,6 @@ public class Less18 {
             Assert.fail();
         } catch (NoSuchElementException e) {
             Assert.assertTrue(true);
-
         }
     }
 
@@ -99,6 +101,8 @@ public class Less18 {
         webDriver.findElement(By.xpath("//input[@value='Add']")).click();
         assertBack();
         clickBack();
+        Cookie cookie = webDriver.manage().getCookieNamed("table");
+        Assert.assertNotEquals(cookie.toString(), "done");
 
     }
 
@@ -113,6 +117,8 @@ public class Less18 {
         webDriver.findElement(By.xpath("//input[@name='ok']")).click();
         assertBack();
         clickBack();
+        Cookie cookie = webDriver.manage().getCookieNamed("iframe");
+        Assert.assertNotEquals(cookie.toString(), "done");
     }
 
 

@@ -1,7 +1,9 @@
 package org.DariaRyabinina;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class Less17 {
@@ -41,13 +46,15 @@ public class Less17 {
         Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(), "Java, C++");
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
+
         clickButton("form");
         enterValue("First Name:", "Vasia");
         enterValue("Last Name:", "Ivanov");
         enterValue("Email:", "ivanov@ya.ru");
         enterValue("Address:", "Moscow");
         webDriver.findElement(By.xpath("//label[.='Sex:']/following::input[1]")).click();
-        enterValue("Avatar:", "C:\\Users\\mas-d\\Учеба\\rD2QaWX7-ms.JPG");
+        Path testFile = Paths.get("src/main/resources/AMNyjhm7zk4.jpg");
+        enterValue("Avatar:", testFile.toAbsolutePath().toString());
         webDriver.findElement(By.xpath("//label[.='Tell me something about yourself']/following::textarea")).sendKeys("Привет!");
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webDriver.findElement(By.xpath("//label[.='Tell me something about yourself']/following::input")).click();
@@ -65,6 +72,9 @@ public class Less17 {
         webDriver.findElement(By.name("ok")).click();
         assertBack();
         webDriver.findElement(By.xpath("//a")).click();
+        cookie("form");
+        cookie("iframe");
+        cookie("select");
     }
 
     public void clickButton(String idButton) {
@@ -84,6 +94,11 @@ public class Less17 {
     public void enterValue(String name, String value) {
         webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
 
+    }
+
+    public void cookie(String coocieName) {
+        Cookie cookie = webDriver.manage().getCookieNamed(coocieName);
+        Assert.assertNotEquals(cookie.toString(), "done");
     }
 
     public void assertBack() {
