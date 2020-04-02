@@ -11,7 +11,7 @@ import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
-public class Less16 extends Methods {
+public class Less16 {
     private WebDriver webDriver;
     public static final Logger LOGG = LoggerFactory.getLogger(Less16.class);
 
@@ -75,12 +75,6 @@ public class Less16 extends Methods {
 
     public void clickCheckBox(String nameBox) {
         webDriver.findElement(By.id(nameBox)).click();
-    }
-
-    public void cooseSelect(String selectTitle, String value) {
-        WebElement selectElement = webDriver.findElement(By.xpath("//label[.='" + selectTitle + "']/following-sibling::select[1]"));
-        Select select = new Select(selectElement);
-        select.selectByVisibleText(value);
     }
 
     public void enterValue(String name, String value) {

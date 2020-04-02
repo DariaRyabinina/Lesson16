@@ -126,15 +126,6 @@ public class Less18 {
         webDriver.findElement(By.id(idButton)).click();
     }
 
-    public void clickCheckBox(String nameBox) {
-        webDriver.findElement(By.id(nameBox)).click();
-    }
-
-    public void chooseSelect(String selectTitle, String value) {
-        WebElement selectElement = webDriver.findElement(By.xpath("//label[.='" + selectTitle + "']/following-sibling::select[1]"));
-        Select select = new Select(selectElement);
-        select.selectByVisibleText(value);
-    }
 
     public void enterValue(String name, String value) {
         webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
