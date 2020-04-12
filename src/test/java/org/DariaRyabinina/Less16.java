@@ -40,9 +40,9 @@ public class Less16 {
         Assert.assertEquals(exellent.getText(), "Excellent!");
         WebElement button = webDriver.findElement(By.xpath("//input[@value='Click me too!']"));
         Assert.assertNotEquals(button, null);
-        webDriver.findElement(By.xpath("//input[@value='Click me too!']")).click();
+        button.click();
         assertBack();
-        webDriver.findElement(By.xpath("//a")).click();
+        webDriver.findElement(By.linkText("Great! Return to menu")).click();
         Cookie cookie1 = webDriver.manage().getCookieNamed("button");
         Assert.assertNotEquals(cookie1.toString(), "done");
 
@@ -63,7 +63,7 @@ public class Less16 {
         LOGG.info(result);
         Assert.assertEquals(result, stringRadio);
         assertBack();
-        webDriver.findElement(By.xpath("//a")).click();
+        webDriver.findElement(By.linkText("Great! Return to menu")).click();
         Cookie cookie2 = webDriver.manage().getCookieNamed("checkboxes");
         Assert.assertNotEquals(cookie2.toString(), "done");
     }

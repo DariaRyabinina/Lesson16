@@ -30,8 +30,13 @@ public class Less17 {
     @BeforeMethod
     public void initDriver() {
         webDriver = new ChromeDriver();
-
     }
+
+    @AfterMethod
+    public void closeDriver() {
+        webDriver.quit();
+    }
+
 
     @Test(testName = "Less17")
     public void Less17() {
@@ -45,7 +50,7 @@ public class Less17 {
         Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result']")).getText(), "Linus Torvalds");
         Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(), "Java, C++");
         assertBack();
-        webDriver.findElement(By.xpath("//a")).click();
+        webDriver.findElement(By.linkText("Great! Return to menu")).click();
 
         clickButton("form");
         enterValue("First Name:", "Vasia");
@@ -71,7 +76,7 @@ public class Less17 {
         webDriver.findElement(By.name("code")).sendKeys(kod);
         webDriver.findElement(By.name("ok")).click();
         assertBack();
-        webDriver.findElement(By.xpath("//a")).click();
+        webDriver.findElement(By.linkText("Great! Return to menu")).click();
         cookie("form");
         cookie("iframe");
         cookie("select");

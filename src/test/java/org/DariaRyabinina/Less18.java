@@ -33,7 +33,11 @@ public class Less18 {
     public void initDriver() {
         webDriver = new ChromeDriver();
         webDriver.get("https://savkk.github.io/selenium-practice/");
+    }
 
+    @AfterMethod
+    public void closeDriver() {
+        webDriver.quit();
     }
 
     @Test(testName = "Less18_1")
@@ -133,11 +137,11 @@ public class Less18 {
     }
 
     public void assertBack() {
-        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu");
+        Assert.assertEquals(webDriver.findElement(By.linkText("Great! Return to menu")).getText(), "Great! Return to menu");
     }
 
     public void clickBack() {
-        webDriver.findElement(By.xpath("//a")).click();
+        webDriver.findElement(By.linkText("Great! Return to menu")).click();
     }
 
     public void selectCheckBox(int rowIndex) {
