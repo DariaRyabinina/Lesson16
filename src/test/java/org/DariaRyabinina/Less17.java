@@ -32,10 +32,10 @@ public class Less17 {
         webDriver = new ChromeDriver();
     }
 
-    @AfterMethod
-    public void closeDriver() {
-        webDriver.quit();
-    }
+//    @AfterMethod
+//    public void closeDriver() {
+//        webDriver.quit();
+//    }
 
 
     @Test(testName = "Less17")
@@ -93,7 +93,8 @@ public class Less17 {
     }
 
     public void enterValue(String name, String value) {
-        webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
+        webDriver.findElement(By.xpath("//div[label='" + name + "']//input")).sendKeys(value);
+
 
     }
 

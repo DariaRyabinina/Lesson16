@@ -98,7 +98,7 @@ public class Less18 {
 
         selectCheckBox(2);
         selectCheckBox(3);
-        webDriver.findElement(By.xpath("//table/following-sibling::input[1]")).click();
+        webDriver.findElement(By.xpath("//input[@value='Delete']")).click();
         enterValue("Contact", "123456");
         enterValue("Country", "Россия");
         enterValue("Company", "Ромашка");
