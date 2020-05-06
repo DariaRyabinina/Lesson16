@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Less16-17-18">
+    <test name="TestNG сценарии">
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="all"></include>-->
+<!--            </run>-->
+<!--        </groups>-->
+        <classes>
+            <class name="org.DariaRyabinina.Less16"></class>
+            <class name="org.DariaRyabinina.Less17"></class>
+            <class name="org.DariaRyabinina.Less18"></class>
+        </classes>
+    </test>
+</suite>

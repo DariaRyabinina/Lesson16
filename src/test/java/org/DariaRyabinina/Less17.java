@@ -32,14 +32,14 @@ public class Less17 {
         webDriver = new ChromeDriver();
     }
 
-//    @AfterMethod
-//    public void closeDriver() {
-//        webDriver.quit();
-//    }
+    @AfterMethod
+    public void closeDriver() {
+        webDriver.quit();
+    }
 
 
-    @Test(testName = "Less17")
-    public void Less17() {
+    @Test(testName = "Less17FormIframeSelect",groups = "all")
+    public void Less17FormIframeSelect() {
         webDriver.get("https://savkk.github.io/selenium-practice/");
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         clickButton("select");
@@ -47,8 +47,8 @@ public class Less17 {
         chooseSelect("Select your programming languages:", "Java");
         chooseSelect("Select your programming languages:", "C++");
         clickButton("go");
-        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result']")).getText(), "Linus Torvalds");
-        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(), "Java, C++");
+        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result']")).getText(), "Linus Torvalds", "Linus Torvalds не выбрано");
+        Assert.assertEquals(webDriver.findElement(By.xpath("//label[@name='result'][2]")).getText(), "Java, C++", "Java, C++ не выбрано");
         assertBack();
         webDriver.findElement(By.linkText("Great! Return to menu")).click();
 
@@ -77,33 +77,39 @@ public class Less17 {
         webDriver.findElement(By.name("ok")).click();
         assertBack();
         webDriver.findElement(By.linkText("Great! Return to menu")).click();
+
         cookie("form");
         cookie("iframe");
         cookie("select");
     }
 
-    public void clickButton(String idButton) {
+    private void clickButton(String idButton) {
         webDriver.findElement(By.id(idButton)).click();
     }
 
-    public void chooseSelect(String selectTitle, String value) {
+    private void chooseSelect(String selectTitle, String value) {
         WebElement selectElement = webDriver.findElement(By.xpath("//label[.='" + selectTitle + "']/following-sibling::select[1]"));
         Select select = new Select(selectElement);
         select.selectByVisibleText(value);
     }
 
-    public void enterValue(String name, String value) {
+    private void enterValue(String name, String value) {
         webDriver.findElement(By.xpath("//div[label='" + name + "']//input")).sendKeys(value);
 
 
     }
 
-    public void cookie(String coocieName) {
-        Cookie cookie = webDriver.manage().getCookieNamed(coocieName);
-        Assert.assertNotEquals(cookie.toString(), "done");
-    }
+    private void cookie(String coocieName) {
 
-    public void assertBack() {
-        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu");
+        Cookie cookieAll = webDriver.manage().getCookieNamed(coocieName);
+        boolean cookieChange = cookieAll.toString().contains("done");
+        if (!cookieChange) {
+            Assert.fail("Cookie "+coocieName+" не имеют статус done");
+        }
+      }
+
+
+    private void assertBack() {
+        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu", "Название кнопки не соответствует Great! Return to menu. ");
     }
 }

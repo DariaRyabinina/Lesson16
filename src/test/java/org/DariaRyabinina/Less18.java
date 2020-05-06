@@ -9,7 +9,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -22,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class Less18 {
     private WebDriver webDriver;
     public static final Logger LOGG = LoggerFactory.getLogger(Less18.class);
-    private WebDriver webDriver1;
 
     @BeforeClass
     public void downloadDriverManager() {
@@ -40,8 +38,8 @@ public class Less18 {
         webDriver.quit();
     }
 
-    @Test(testName = "Less18_1")
-    public void Less18_1() {
+    @Test(testName = "Less18_1Alerts", groups = "all")
+    public void Less18_1Alerts() {
         clickButton("alerts");
         webDriver.findElement(By.xpath("//button[.='Get password']")).click();
         Alert alert1 = webDriver.switchTo().alert();
@@ -61,14 +59,15 @@ public class Less18 {
         webDriver.findElement(By.xpath("//button[@class ='return']")).click();
         Alert alert3 = webDriver.switchTo().alert();
         alert3.accept();
-        Cookie cookie = webDriver.manage().getCookieNamed("alerts");
-        Assert.assertNotEquals(cookie.toString(), "done");
-
-
+        Cookie cookiea3 = webDriver.manage().getCookieNamed("alerts");
+        boolean cookieAlerts = cookiea3.toString().contains("done");
+        if (!cookieAlerts) {
+            Assert.fail("Cookie lerts не имеют статус done");
+        }
     }
 
-    @Test(testName = "Less18_2")
-    public void Less18_2() {
+    @Test(testName = "Less18_2Allert", groups = "all")
+    public void Less18_2Allert() {
         clickButton("alerts");
         webDriver.findElement(By.xpath("//button[.='Get password']")).click();
         Alert alert1 = webDriver.switchTo().alert();
@@ -92,8 +91,8 @@ public class Less18 {
         }
     }
 
-    @Test(testName = "Less18_3")
-    public void Less18_3() {
+    @Test(testName = "Less18_3Table", groups = "all")
+    public void Less18_3Table() {
         clickButton("table");
 
         selectCheckBox(2);
@@ -105,13 +104,15 @@ public class Less18 {
         webDriver.findElement(By.xpath("//input[@value='Add']")).click();
         assertBack();
         clickBack();
-        Cookie cookie = webDriver.manage().getCookieNamed("table");
-        Assert.assertNotEquals(cookie.toString(), "done");
-
+        Cookie cookie1 = webDriver.manage().getCookieNamed("table");
+        boolean cookieTable = cookie1.toString().contains("done");
+        if (!cookieTable) {
+            Assert.fail("Cookie table не имеют статус done");
+        }
     }
 
-    @Test(testName = "Less18_4")
-    public void Less18_4() {
+    @Test(testName = "Less18_4Iframe", groups = "all")
+    public void Less18_4Iframe() {
         clickButton("iframe");
         webDriver.switchTo().frame("code-frame");
         String iframeKode = webDriver.findElement(By.id("code")).getText();
@@ -121,30 +122,33 @@ public class Less18 {
         webDriver.findElement(By.xpath("//input[@name='ok']")).click();
         assertBack();
         clickBack();
-        Cookie cookie = webDriver.manage().getCookieNamed("iframe");
-        Assert.assertNotEquals(cookie.toString(), "done");
+        Cookie cookie2 = webDriver.manage().getCookieNamed("iframe");
+        boolean cookieIframe = cookie2.toString().contains("done");
+        if (!cookieIframe) {
+            Assert.fail("Cookie iframe не имеют статус done");
+        }
     }
 
 
-    public void clickButton(String idButton) {
+    private void clickButton(String idButton) {
         webDriver.findElement(By.id(idButton)).click();
     }
 
 
-    public void enterValue(String name, String value) {
+    private void enterValue(String name, String value) {
         webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
 
     }
 
-    public void assertBack() {
-        Assert.assertEquals(webDriver.findElement(By.linkText("Great! Return to menu")).getText(), "Great! Return to menu");
+    private void assertBack() {
+        Assert.assertEquals(webDriver.findElement(By.linkText("Great! Return to menu")).getText(), "Great! Return to menu", "Название кнопки не соответствует Great! Return to menu. ");
     }
 
-    public void clickBack() {
+    private void clickBack() {
         webDriver.findElement(By.linkText("Great! Return to menu")).click();
     }
 
-    public void selectCheckBox(int rowIndex) {
+    private void selectCheckBox(int rowIndex) {
         WebElement row = webDriver.findElement(By.xpath("//table//tr[" + rowIndex + "]"));
         row.findElement(By.xpath("//table//tr[" + rowIndex + "]//input")).click();
 

@@ -3,11 +3,11 @@ package org.DariaRyabinina;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,8 +30,8 @@ public class Less16 {
         webDriver.quit();
     }
 
-    @Test(testName = "Less16")
-    public void Less16() {
+    @Test(testName = "Less16CheckboxesButton")
+    public void Less16CheckboxesButton() {
         webDriver.get("https://savkk.github.io/selenium-practice/");
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         clickButton("button");
@@ -44,7 +44,11 @@ public class Less16 {
         assertBack();
         webDriver.findElement(By.linkText("Great! Return to menu")).click();
         Cookie cookie1 = webDriver.manage().getCookieNamed("button");
-        Assert.assertNotEquals(cookie1.toString(), "done");
+        boolean cookieButton = cookie1.toString().contains("done");
+        if (!cookieButton) {
+            Assert.fail("Cookie button не имеют статус done");
+
+        }
 
         clickButton("checkbox");
         clickCheckBox("one");
@@ -65,25 +69,28 @@ public class Less16 {
         assertBack();
         webDriver.findElement(By.linkText("Great! Return to menu")).click();
         Cookie cookie2 = webDriver.manage().getCookieNamed("checkboxes");
-        Assert.assertNotEquals(cookie2.toString(), "done");
+        boolean checkboxes = cookie2.toString().contains("done");
+        if (!checkboxes) {
+            Assert.fail("Cookie checkboxes не имеют статус done");
+        }
     }
 
 
-    public void clickButton(String idButton) {
+    private void clickButton(String idButton) {
         webDriver.findElement(By.id(idButton)).click();
     }
 
-    public void clickCheckBox(String nameBox) {
+    private void clickCheckBox(String nameBox) {
         webDriver.findElement(By.id(nameBox)).click();
     }
 
-    public void enterValue(String name, String value) {
+    private void enterValue(String name, String value) {
         webDriver.findElement(By.xpath("//label[.='" + name + "']/following::input")).sendKeys(value);
 
     }
 
-    public void assertBack() {
-        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu");
+    private void assertBack() {
+        Assert.assertEquals(webDriver.findElement(By.xpath("//a")).getText(), "Great! Return to menu", "Название кнопки не соответствует Great! Return to menu. ");
     }
 
 }
